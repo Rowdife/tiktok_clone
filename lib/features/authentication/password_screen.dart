@@ -87,13 +87,16 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 autocorrect: false,
                 onEditingComplete: _onSubmit,
                 decoration: InputDecoration(
-                  suffix: const Row(children: [
-                    FaIcon(
-                      FontAwesomeIcons.circleXmark,
-                    ),
-                    Gaps.h5,
-                    FaIcon(FontAwesomeIcons.eye),
-                  ]),
+                  suffix: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      FaIcon(
+                        FontAwesomeIcons.circleXmark,
+                      ),
+                      Gaps.h5,
+                      FaIcon(FontAwesomeIcons.eye),
+                    ],
+                  ),
                   hintText: "Password",
                   errorText: _isPasswordValid(),
                   hintStyle: TextStyle(
