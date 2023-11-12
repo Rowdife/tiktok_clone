@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 const interests = [
   "Daily Life",
@@ -54,8 +55,10 @@ class InterestsScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.size24,
+          padding: const EdgeInsets.only(
+            left: Sizes.size24,
+            right: Sizes.size24,
+            bottom: Sizes.size16,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,8 +80,8 @@ class InterestsScreen extends StatelessWidget {
               ),
               Gaps.v64,
               Wrap(
-                runSpacing: 20,
-                spacing: 20,
+                runSpacing: 15,
+                spacing: 15,
                 children: [
                   for (var interest in interests)
                     Container(
@@ -88,6 +91,9 @@ class InterestsScreen extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: Colors.white,
+                        border: Border.all(
+                          color: Colors.black.withOpacity(0.1),
+                        ),
                         borderRadius: BorderRadius.circular(
                           Sizes.size32,
                         ),
@@ -107,6 +113,20 @@ class InterestsScreen extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: const BottomAppBar(
+        elevation: 2,
+        child: Padding(
+          padding: EdgeInsets.only(
+            bottom: Sizes.size12,
+            top: Sizes.size12,
+            left: Sizes.size24,
+            right: Sizes.size24,
+          ),
+          child: FormButton(
+            disabled: false,
           ),
         ),
       ),
