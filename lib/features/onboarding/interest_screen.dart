@@ -52,60 +52,62 @@ class InterestsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Choose your interests"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Sizes.size24,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Gaps.v32,
-            const Text(
-              "Choose your interests",
-              style: TextStyle(
-                fontSize: Sizes.size40,
-                fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size24,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Gaps.v32,
+              const Text(
+                "Choose your interests",
+                style: TextStyle(
+                  fontSize: Sizes.size40,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Gaps.v20,
-            const Text(
-              "Get better video recommendations",
-              style: TextStyle(
-                fontSize: Sizes.size20,
+              Gaps.v20,
+              const Text(
+                "Get better video recommendations",
+                style: TextStyle(
+                  fontSize: Sizes.size20,
+                ),
               ),
-            ),
-            Gaps.v64,
-            Wrap(
-              runSpacing: 20,
-              spacing: 20,
-              children: [
-                for (var interest in interests)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Sizes.size16,
-                      horizontal: Sizes.size24,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(
-                        Sizes.size32,
+              Gaps.v64,
+              Wrap(
+                runSpacing: 20,
+                spacing: 20,
+                children: [
+                  for (var interest in interests)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: Sizes.size16,
+                        horizontal: Sizes.size24,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 5,
-                          spreadRadius: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(
+                          Sizes.size32,
                         ),
-                      ],
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 5,
+                            spreadRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        interest,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    child: Text(
-                      interest,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
