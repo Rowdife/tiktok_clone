@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -29,20 +30,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.house),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.search),
-            label: "Search",
-          ),
-        ],
+    return const Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: Row(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FaIcon(
+                  FontAwesomeIcons.house,
+                  color: Colors.white,
+                ),
+                Gaps.v5,
+                Text(
+                  "Home",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
-      tabBuilder: (context, index) => screens[index],
     );
   }
 }
