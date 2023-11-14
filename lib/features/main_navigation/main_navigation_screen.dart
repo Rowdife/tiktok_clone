@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
+import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -39,11 +39,23 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Stack(children: [
+      body: Stack(children: [
         Offstage(
-          offstage: false,
-          child: SafeArea(child: Center(child: Text("Hi"))),
-        )
+          offstage: _selectedIndex != 0,
+          child: const VideoTimelineScreen(),
+        ),
+        Offstage(
+          offstage: _selectedIndex != 1,
+          child: Container(),
+        ),
+        Offstage(
+          offstage: _selectedIndex != 3,
+          child: Container(),
+        ),
+        Offstage(
+          offstage: _selectedIndex != 4,
+          child: Container(),
+        ),
       ]),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
