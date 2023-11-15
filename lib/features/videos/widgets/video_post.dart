@@ -7,13 +7,10 @@ import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends StatefulWidget {
-  final Function onVideoFinished;
-
   final int index;
 
   const VideoPost({
     super.key,
-    required this.onVideoFinished,
     required this.index,
   });
 
@@ -31,21 +28,12 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
 
-  void onVideoChange() {
-    if (_videoPlayerController.value.isInitialized) {
-      if (_videoPlayerController.value.duration ==
-          _videoPlayerController.value.position) {
-        widget.onVideoFinished();
-      }
-    }
-  }
-
   void _initVideoPlayer() async {
     _videoPlayerController =
         VideoPlayerController.asset("assets/videos/IMG_2127.MOV");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
-    _videoPlayerController.addListener(onVideoChange);
+
     setState(() {});
   }
 
@@ -71,7 +59,9 @@ class _VideoPostState extends State<VideoPost>
 
   void _onVisibilityChanged(VisibilityInfo info) {
     // Now the display shows 100% fraction and video is not playing, then play the video.
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !_videoPlayerController.value.isPlaying &&
+        !_isPaused) {
       _videoPlayerController.play();
     }
   }
@@ -79,15 +69,17 @@ class _VideoPostState extends State<VideoPost>
   void _togglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
+      setState(() {
+        _isPaused = true;
+      });
       _animationController.reverse();
     } else {
       _videoPlayerController.play();
+      setState(() {
+        _isPaused = false;
+      });
       _animationController.forward();
     }
-
-    setState(() {
-      _isPaused = !_isPaused;
-    });
   }
 
   @override
