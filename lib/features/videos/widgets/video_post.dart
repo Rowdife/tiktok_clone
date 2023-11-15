@@ -21,7 +21,10 @@ class VideoPost extends StatefulWidget {
 
 class _VideoPostState extends State<VideoPost> {
   final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset("assets/videos/IMG_0089.MOV");
+      VideoPlayerController.asset("assets/videos/IMG_2127.MOV");
+
+  bool _isPaused = false;
+  final Duration _animationDuration = const Duration(milliseconds: 200);
 
   void onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -63,6 +66,10 @@ class _VideoPostState extends State<VideoPost> {
     } else {
       _videoPlayerController.play();
     }
+
+    setState(() {
+      _isPaused = !_isPaused;
+    });
   }
 
   @override
@@ -84,13 +91,27 @@ class _VideoPostState extends State<VideoPost> {
               onTap: _togglePause,
             ),
           ),
-          const Positioned.fill(
+          Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: FaIcon(
-                  FontAwesomeIcons.play,
-                  color: Colors.white,
-                  size: Sizes.size52,
+                child: AnimatedOpacity(
+                  opacity: _isPaused ? 1 : 0,
+                  duration: _animationDuration,
+                  child: Container(
+                    width: Sizes.size96,
+                    height: Sizes.size96,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black38,
+                    ),
+                    child: const Center(
+                      child: FaIcon(
+                        FontAwesomeIcons.play,
+                        color: Colors.white,
+                        size: Sizes.size52,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
