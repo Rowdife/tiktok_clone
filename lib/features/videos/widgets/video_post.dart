@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -26,7 +27,14 @@ class _VideoPostState extends State<VideoPost>
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
+  int _captionLengthLimit = 70;
+
   bool _isPaused = false;
+
+  bool _showFullCaption = false;
+
+  final String _captionText =
+      "This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. fdfsafdasfsf";
 
   void _initVideoPlayer() async {
     _videoPlayerController =
@@ -80,6 +88,20 @@ class _VideoPostState extends State<VideoPost>
       });
       _animationController.forward();
     }
+  }
+
+  void _readMoreCaption() {
+    setState(() {
+      _showFullCaption = !_showFullCaption;
+      _captionLengthLimit = 500;
+    });
+  }
+
+  void _closeCaption() {
+    setState(() {
+      _showFullCaption = !_showFullCaption;
+      _captionLengthLimit = 70;
+    });
   }
 
   @override
@@ -136,26 +158,44 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
-          const Positioned(
-            bottom: 30,
-            left: 30,
+          Positioned(
+            bottom: 15,
+            left: 15,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "@Shihyun",
                   style: TextStyle(
-                    fontSize: Sizes.size20,
+                    fontSize: Sizes.size16,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Gaps.v10,
-                Text(
-                  "This is my golf swing.",
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.white,
+                Gaps.v20,
+                SizedBox(
+                  width: 290,
+                  child: Text.rich(
+                    TextSpan(
+                      style: const TextStyle(
+                        fontSize: Sizes.size14,
+                        color: Colors.white,
+                      ),
+                      text: _captionText.length > _captionLengthLimit
+                          ? '${_captionText.substring(0, _captionLengthLimit)}...'
+                          : _captionText,
+                      children: [
+                        TextSpan(
+                            text: _showFullCaption ? "     Close" : "read more",
+                            style: const TextStyle(
+                              color: Colors.white60,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = _showFullCaption
+                                  ? _closeCaption
+                                  : _readMoreCaption)
+                      ],
+                    ),
                   ),
                 )
               ],
