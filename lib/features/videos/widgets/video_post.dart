@@ -96,7 +96,6 @@ class _VideoPostState extends State<VideoPost>
     setState(() {
       _isFullCaptionShowed = !_isFullCaptionShowed;
     });
-    print(_isFullCaptionShowed);
   }
 
   String _autoEditedCaptionText() {
@@ -158,6 +157,28 @@ class _VideoPostState extends State<VideoPost>
                     ),
                   ),
                 ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              decoration: _isFullCaptionShowed
+                  ? BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.7), // 반투명 검은색
+                          Colors.transparent, // 투명
+                        ],
+                      ),
+                    )
+                  : const BoxDecoration(),
+              child: const Text(
+                '',
               ),
             ),
           ),
