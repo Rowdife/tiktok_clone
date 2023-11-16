@@ -27,14 +27,16 @@ class _VideoPostState extends State<VideoPost>
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
-  int _captionLengthLimit = 70;
+  final int _captionLengthLimit = 65;
+
+  final TextStyle _textButton = const TextStyle(color: Colors.white60);
 
   bool _isPaused = false;
 
-  bool _showFullCaption = false;
+  bool _isFullCaptionShowed = false;
 
   final String _captionText =
-      "This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. fdfsafdasfsf";
+      "This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing.";
 
   void _initVideoPlayer() async {
     _videoPlayerController =
@@ -90,18 +92,19 @@ class _VideoPostState extends State<VideoPost>
     }
   }
 
-  void _readMoreCaption() {
+  void _toggleMoreAndClose() {
     setState(() {
-      _showFullCaption = !_showFullCaption;
-      _captionLengthLimit = 500;
+      _isFullCaptionShowed = !_isFullCaptionShowed;
     });
+    print(_isFullCaptionShowed);
   }
 
-  void _closeCaption() {
-    setState(() {
-      _showFullCaption = !_showFullCaption;
-      _captionLengthLimit = 70;
-    });
+  String _autoEditedCaptionText() {
+    if (_captionText.length > _captionLengthLimit) {
+      return "${_captionText.substring(0, _captionLengthLimit)}...";
+    } else {
+      return _captionText;
+    }
   }
 
   @override
@@ -175,29 +178,43 @@ class _VideoPostState extends State<VideoPost>
                 Gaps.v20,
                 SizedBox(
                   width: 290,
-                  child: Text.rich(
-                    TextSpan(
-                      style: const TextStyle(
-                        fontSize: Sizes.size14,
-                        color: Colors.white,
-                      ),
-                      text: _captionText.length > _captionLengthLimit
-                          ? '${_captionText.substring(0, _captionLengthLimit)}...'
-                          : _captionText,
-                      children: [
-                        TextSpan(
-                            text: _showFullCaption ? "     Close" : "read more",
+                  child: _captionText.length > _captionLengthLimit
+                      ? Text.rich(
+                          TextSpan(
+                            text: _isFullCaptionShowed
+                                ? _captionText
+                                : _autoEditedCaptionText(),
                             style: const TextStyle(
-                              color: Colors.white60,
+                              fontSize: Sizes.size14,
+                              color: Colors.white,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = _showFullCaption
-                                  ? _closeCaption
-                                  : _readMoreCaption)
-                      ],
-                    ),
-                  ),
-                )
+                            children: [
+                              _isFullCaptionShowed
+                                  ? TextSpan(
+                                      text: "   Close",
+                                      style: _textButton,
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = _toggleMoreAndClose,
+                                    )
+                                  : TextSpan(
+                                      text: "Read more",
+                                      style: _textButton,
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = _toggleMoreAndClose,
+                                    )
+                            ],
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: _isFullCaptionShowed ? 999 : 2,
+                        )
+                      : Text(
+                          _captionText,
+                          style: const TextStyle(
+                            fontSize: Sizes.size14,
+                            color: Colors.white,
+                          ),
+                        ),
+                ),
               ],
             ),
           ),

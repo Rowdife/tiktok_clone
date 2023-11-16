@@ -11,10 +11,10 @@ class PostVideoButton extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         Positioned(
-          left: 24,
+          left: 22,
           child: Container(
-            height: 36,
-            width: 26,
+            height: 28,
+            width: Sizes.size28,
             padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size8,
             ),
@@ -27,10 +27,10 @@ class PostVideoButton extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 24,
+          right: 22,
           child: Container(
-            height: 36,
-            width: 26,
+            height: 28,
+            width: Sizes.size28,
             padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size8,
             ),
@@ -43,7 +43,7 @@ class PostVideoButton extends StatelessWidget {
           ),
         ),
         Container(
-          height: 36,
+          height: 28,
           padding: const EdgeInsets.symmetric(
             horizontal: Sizes.size12,
           ),
