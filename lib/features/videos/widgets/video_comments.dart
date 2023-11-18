@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -13,15 +11,26 @@ class VideoComments extends StatefulWidget {
 }
 
 class _VideoCommentsState extends State<VideoComments> {
+  Color bgColor = Colors.grey.shade50;
+  Color mainTextColor = Colors.grey.shade600;
+
+  bool _isWriting = false;
+
   void _onClosedPressed() {
     Navigator.of(context).pop();
   }
 
-  Color bgColor = Colors.grey.shade50;
-  Color mainTextColor = Colors.grey.shade600;
-
-  void _onBodyTap() {
+  void _unfocusKeyboard() {
     FocusScope.of(context).unfocus();
+    setState(() {
+      _isWriting = false;
+    });
+  }
+
+  void _onStartWriting() {
+    setState(() {
+      _isWriting = true;
+    });
   }
 
   @override
@@ -46,7 +55,7 @@ class _VideoCommentsState extends State<VideoComments> {
           ],
         ),
         body: GestureDetector(
-          onTap: _onBodyTap,
+          onTap: _unfocusKeyboard,
           child: Stack(
             children: [
               ListView.separated(
@@ -125,6 +134,7 @@ class _VideoCommentsState extends State<VideoComments> {
                           child: SizedBox(
                             height: 40,
                             child: TextField(
+                              onTap: _onStartWriting,
                               expands: true,
                               keyboardType: TextInputType
                                   .multiline, //Doing the same thing
@@ -144,18 +154,52 @@ class _VideoCommentsState extends State<VideoComments> {
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: Sizes.size16,
                                 ),
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: Sizes.size14,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      if (!_isWriting)
+                                        const Row(
+                                          children: [
+                                            FaIcon(
+                                              FontAwesomeIcons.at,
+                                              color: Colors.black,
+                                              size: Sizes.size20,
+                                            ),
+                                            Gaps.h8,
+                                            FaIcon(
+                                              FontAwesomeIcons.gift,
+                                              color: Colors.black,
+                                              size: Sizes.size20,
+                                            ),
+                                            Gaps.h8,
+                                            FaIcon(
+                                              FontAwesomeIcons.faceSmile,
+                                              color: Colors.black,
+                                              size: Sizes.size20,
+                                            ),
+                                          ],
+                                        ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
                         Gaps.h10,
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: IconButton(
-                              onPressed: () {},
+                        if (_isWriting)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: IconButton(
+                              onPressed: _unfocusKeyboard,
                               icon: FaIcon(FontAwesomeIcons.paperPlane,
-                                  color: Colors.grey.shade600)),
-                        )
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                          )
                       ],
                     ),
                   ),
