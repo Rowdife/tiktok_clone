@@ -77,7 +77,7 @@ class _VideoPostState extends State<VideoPost>
     }
   }
 
-  void _togglePause() {
+  void _onTogglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
       setState(() {
@@ -110,6 +110,7 @@ class _VideoPostState extends State<VideoPost>
   void _onCommentTap(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.transparent,
       builder: (context) => const VideoComments(),
     );
   }
@@ -130,7 +131,7 @@ class _VideoPostState extends State<VideoPost>
           ),
           Positioned.fill(
             child: GestureDetector(
-              onTap: _togglePause,
+              onTap: _onTogglePause,
             ),
           ),
           Positioned.fill(
