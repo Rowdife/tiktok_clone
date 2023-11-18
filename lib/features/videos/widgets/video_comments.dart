@@ -19,9 +19,11 @@ class _VideoCommentsState extends State<VideoComments> {
     return Container(
       clipBehavior: Clip.hardEdge,
       decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(Sizes.size10)),
+          BoxDecoration(borderRadius: BorderRadius.circular(Sizes.size14)),
       child: Scaffold(
+        backgroundColor: Colors.grey[50],
         appBar: AppBar(
+          backgroundColor: Colors.grey[50],
           automaticallyImplyLeading: false,
           title: const Text("22796 comments"),
           actions: [
@@ -30,6 +32,12 @@ class _VideoCommentsState extends State<VideoComments> {
               icon: const FaIcon(FontAwesomeIcons.xmark),
             ),
           ],
+        ),
+        body: ListView.builder(
+          itemCount: 100,
+          itemBuilder: (context, index) => Container(
+            child: const Text("I am a comment"),
+          ),
         ),
       ),
     );

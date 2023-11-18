@@ -109,6 +109,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _onCommentTap(BuildContext context) {
     showModalBottomSheet(
+      scrollControlDisabledMaxHeightRatio: 0.8,
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => const VideoComments(),
