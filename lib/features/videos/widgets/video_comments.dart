@@ -99,6 +99,7 @@ class _VideoCommentsState extends State<VideoComments> {
                 radius: 18,
                 child: const FaIcon(FontAwesomeIcons.solidUser),
               ),
+              const Expanded(child: TextField())
             ],
           ),
         ),
