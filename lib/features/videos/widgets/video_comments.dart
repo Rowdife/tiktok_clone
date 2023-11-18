@@ -58,57 +58,60 @@ class _VideoCommentsState extends State<VideoComments> {
           onTap: _unfocusKeyboard,
           child: Stack(
             children: [
-              ListView.separated(
-                padding: const EdgeInsets.symmetric(
-                  vertical: Sizes.size10,
-                  horizontal: Sizes.size16,
-                ),
-                separatorBuilder: (context, index) => Gaps.v20,
-                itemCount: 10,
-                itemBuilder: (context, index) => Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const CircleAvatar(
-                      radius: 18,
-                      child: FaIcon(FontAwesomeIcons.solidUser),
-                    ),
-                    Gaps.h10,
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              Scrollbar(
+                child: ListView.separated(
+                  padding: const EdgeInsets.only(
+                      top: Sizes.size10,
+                      right: Sizes.size10,
+                      left: Sizes.size16,
+                      bottom: Sizes.size96 + Sizes.size10),
+                  separatorBuilder: (context, index) => Gaps.v20,
+                  itemCount: 10,
+                  itemBuilder: (context, index) => Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const CircleAvatar(
+                        radius: 18,
+                        child: FaIcon(FontAwesomeIcons.solidUser),
+                      ),
+                      Gaps.h10,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Shihyun",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: Sizes.size14,
+                                color: mainTextColor,
+                              ),
+                            ),
+                            Gaps.v4,
+                            const Text(
+                                "This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. ")
+                          ],
+                        ),
+                      ),
+                      Gaps.h10,
+                      Column(
                         children: [
+                          FaIcon(
+                            FontAwesomeIcons.heart,
+                            size: Sizes.size20,
+                            color: mainTextColor,
+                          ),
+                          Gaps.v4,
                           Text(
-                            "Shihyun",
+                            "31.9K",
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: Sizes.size14,
                               color: mainTextColor,
                             ),
                           ),
-                          Gaps.v4,
-                          const Text(
-                              "This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. ")
                         ],
-                      ),
-                    ),
-                    Gaps.h10,
-                    Column(
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.heart,
-                          size: Sizes.size20,
-                          color: mainTextColor,
-                        ),
-                        Gaps.v4,
-                        Text(
-                          "31.9K",
-                          style: TextStyle(
-                            color: mainTextColor,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Positioned(
