@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -13,8 +14,29 @@ final tabs = [
   "Brands",
 ];
 
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
+
+  @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  final TextEditingController _textEditingController = TextEditingController();
+
+  void _onSearchChanged(String value) {
+    print(value);
+  }
+
+  void _onSearchSubmitted(String value) {
+    print(value);
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +45,11 @@ class DiscoverScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.5,
-          title: const Text("Discover"),
+          title: CupertinoSearchTextField(
+            controller: _textEditingController,
+            onChanged: _onSearchChanged,
+            onSubmitted: _onSearchSubmitted,
+          ),
           bottom: TabBar(
             padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size16,
@@ -56,13 +82,19 @@ class DiscoverScreen extends StatelessWidget {
               ),
               itemBuilder: (context, index) => Column(
                 children: [
-                  AspectRatio(
-                    aspectRatio: 9 / 16,
-                    child: FadeInImage.assetNetwork(
-                      fit: BoxFit.fitHeight,
-                      placeholder: "assets/images/placeholder.jpg",
-                      image:
-                          "https://cdn.pixabay.com/photo/2016/11/29/04/19/ocean-1867285_1280.jpg",
+                  Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Sizes.size4),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 9 / 16,
+                      child: FadeInImage.assetNetwork(
+                        fit: BoxFit.fitHeight,
+                        placeholder: "assets/images/placeholder.jpg",
+                        image:
+                            "https://cdn.pixabay.com/photo/2016/11/29/04/19/ocean-1867285_1280.jpg",
+                      ),
                     ),
                   ),
                   Gaps.v10,
