@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 final tabs = [
@@ -50,13 +51,23 @@ class DiscoverScreen extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: Sizes.size10,
                 mainAxisSpacing: Sizes.size10,
-                childAspectRatio: 9 / 16,
+                childAspectRatio: 9 / 20,
               ),
-              itemBuilder: (context, index) => Container(
-                color: Colors.teal,
-                child: Center(
-                  child: Text("$index"),
-                ),
+              itemBuilder: (context, index) => Column(
+                children: [
+                  AspectRatio(
+                    aspectRatio: 9 / 16,
+                    child: FadeInImage.assetNetwork(
+                      fit: BoxFit.fitHeight,
+                      placeholder: "assets/images/placeholder.jpg",
+                      image:
+                          "https://cdn.pixabay.com/photo/2016/11/29/04/19/ocean-1867285_1280.jpg",
+                    ),
+                  ),
+                  Gaps.v10,
+                  const Text(
+                      "This is a very long caption for my tiktok that I'm upload just for now.")
+                ],
               ),
             ),
             for (var tab in tabs.skip(1))
