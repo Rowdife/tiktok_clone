@@ -24,6 +24,7 @@ class DiscoverScreen extends StatefulWidget {
 
 class _DiscoverScreenState extends State<DiscoverScreen> {
   final TextEditingController _textEditingController = TextEditingController();
+  bool _isWriting = false;
 
   void _onSearchChanged(String value) {
     print(value);
@@ -33,8 +34,34 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     print(value);
   }
 
-  void _unfocusKeyboard(VisibilityInfo info) {
+  void _unfocusKeyboard() {
     FocusScope.of(context).unfocus();
+  }
+
+  void _onUnfocusByTap(VisibilityInfo info) {
+    _unfocusKeyboard();
+  }
+
+  void _onClearTap() {
+    _textEditingController.clear();
+  }
+
+  void _textFieldCheck() {
+    if (_textEditingController.text.isNotEmpty) {
+      setState(() {
+        _isWriting = true;
+      });
+    } else {
+      setState(() {
+        _isWriting = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _textEditingController.addListener(_textFieldCheck);
+    super.initState();
   }
 
   @override
@@ -51,10 +78,53 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 0.5,
-          title: CupertinoSearchTextField(
+          title: TextField(
             controller: _textEditingController,
-            onChanged: _onSearchChanged,
-            onSubmitted: _onSearchSubmitted,
+            cursorColor: Theme.of(context).primaryColor,
+            decoration: InputDecoration(
+              prefixIcon: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.magnifyingGlass,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+              hintText: "Write a comment.",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Sizes.size4),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.grey.shade200,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size16,
+              ),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(
+                  right: Sizes.size14,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_isWriting)
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: _onClearTap,
+                            child: FaIcon(
+                              FontAwesomeIcons.solidCircleXmark,
+                              color: Colors.grey.shade500,
+                              size: Sizes.size20,
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+              ),
+            ),
           ),
           bottom: TabBar(
             padding: const EdgeInsets.symmetric(
@@ -77,85 +147,89 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         ),
         body: TabBarView(
           children: [
-            GridView.builder(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              itemCount: 20,
-              padding: const EdgeInsets.all(Sizes.size6),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: Sizes.size10,
-                mainAxisSpacing: Sizes.size10,
-                childAspectRatio: 9 / 20,
-              ),
-              itemBuilder: (context, index) => Column(
-                children: [
-                  Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Sizes.size4),
-                    ),
-                    child: AspectRatio(
-                      aspectRatio: 9 / 16,
-                      child: FadeInImage.assetNetwork(
-                        fit: BoxFit.fitHeight,
-                        placeholder: "assets/images/placeholder.jpg",
-                        image:
-                            "https://cdn.pixabay.com/photo/2016/11/29/04/19/ocean-1867285_1280.jpg",
+            GestureDetector(
+              onTap: _unfocusKeyboard,
+              child: GridView.builder(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                itemCount: 20,
+                padding: const EdgeInsets.all(Sizes.size6),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: Sizes.size10,
+                  mainAxisSpacing: Sizes.size10,
+                  childAspectRatio: 9 / 20,
+                ),
+                itemBuilder: (context, index) => Column(
+                  children: [
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Sizes.size4),
+                      ),
+                      child: AspectRatio(
+                        aspectRatio: 9 / 16,
+                        child: FadeInImage.assetNetwork(
+                          fit: BoxFit.fitHeight,
+                          placeholder: "assets/images/placeholder.jpg",
+                          image:
+                              "https://cdn.pixabay.com/photo/2016/11/29/04/19/ocean-1867285_1280.jpg",
+                        ),
                       ),
                     ),
-                  ),
-                  Gaps.v10,
-                  const Text(
-                    "This is a very long caption for my tiktok that I'm upload just for now.",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: Sizes.size16,
-                      fontWeight: FontWeight.bold,
+                    Gaps.v10,
+                    const Text(
+                      "This is a very long caption for my tiktok that I'm upload just for now.",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: Sizes.size16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Gaps.v8,
-                  DefaultTextStyle(
-                    style: TextStyle(
-                        color: Colors.grey.shade700,
-                        fontSize: Sizes.size12,
-                        fontWeight: FontWeight.w600),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const CircleAvatar(
-                          radius: 12,
-                          backgroundImage: NetworkImage(
-                              "https://avatars.githubusercontent.com/u/76625609?v=4"),
-                        ),
-                        Gaps.h4,
-                        const Expanded(
-                          child: Text(
-                            "My namfdsafsalkdfsaf;lsafjksf;lsal",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Gaps.h4,
-                        FaIcon(
-                          FontAwesomeIcons.heart,
-                          size: Sizes.size14,
+                    Gaps.v8,
+                    DefaultTextStyle(
+                      style: TextStyle(
                           color: Colors.grey.shade700,
-                        ),
-                        Gaps.h2,
-                        const Text(
-                          "2.2M",
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                          fontSize: Sizes.size12,
+                          fontWeight: FontWeight.w600),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const CircleAvatar(
+                            radius: 12,
+                            backgroundImage: NetworkImage(
+                                "https://avatars.githubusercontent.com/u/76625609?v=4"),
+                          ),
+                          Gaps.h4,
+                          const Expanded(
+                            child: Text(
+                              "My namfdsafsalkdfsaf;lsafjksf;lsal",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Gaps.h4,
+                          FaIcon(
+                            FontAwesomeIcons.heart,
+                            size: Sizes.size14,
+                            color: Colors.grey.shade700,
+                          ),
+                          Gaps.h2,
+                          const Text(
+                            "2.2M",
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             for (var tab in tabs.skip(1))
               VisibilityDetector(
                 key: Key(tab),
-                onVisibilityChanged: _unfocusKeyboard,
+                onVisibilityChanged: _onUnfocusByTap,
                 child: Center(
                   child: Text(
                     tab,

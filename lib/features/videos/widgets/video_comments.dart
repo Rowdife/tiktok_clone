@@ -199,8 +199,11 @@ class _VideoCommentsState extends State<VideoComments> {
                             padding: const EdgeInsets.only(right: 10),
                             child: IconButton(
                               onPressed: _unfocusKeyboard,
-                              icon: FaIcon(FontAwesomeIcons.paperPlane,
-                                  color: Theme.of(context).primaryColor),
+                              icon: FaIcon(
+                                FontAwesomeIcons.paperPlane,
+                                color: Theme.of(context).primaryColor,
+                                size: Sizes.size20,
+                              ),
                             ),
                           )
                       ],
