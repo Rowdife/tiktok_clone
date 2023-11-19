@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 final tabs = [
   "Top",
@@ -32,6 +33,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     print(value);
   }
 
+  void _unfocusKeyboard(VisibilityInfo info) {
+    FocusScope.of(context).unfocus();
+  }
+
   @override
   void dispose() {
     _textEditingController.dispose();
@@ -43,6 +48,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 0.5,
           title: CupertinoSearchTextField(
@@ -72,6 +78,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         body: TabBarView(
           children: [
             GridView.builder(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               itemCount: 20,
               padding: const EdgeInsets.all(Sizes.size6),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -146,11 +153,15 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               ),
             ),
             for (var tab in tabs.skip(1))
-              Center(
-                child: Text(
-                  tab,
-                  style: const TextStyle(
-                    fontSize: Sizes.size28,
+              VisibilityDetector(
+                key: Key(tab),
+                onVisibilityChanged: _unfocusKeyboard,
+                child: Center(
+                  child: Text(
+                    tab,
+                    style: const TextStyle(
+                      fontSize: Sizes.size28,
+                    ),
                   ),
                 ),
               ),
