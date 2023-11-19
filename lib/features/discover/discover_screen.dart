@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
@@ -66,7 +67,49 @@ class DiscoverScreen extends StatelessWidget {
                   ),
                   Gaps.v10,
                   const Text(
-                      "This is a very long caption for my tiktok that I'm upload just for now.")
+                    "This is a very long caption for my tiktok that I'm upload just for now.",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Gaps.v8,
+                  DefaultTextStyle(
+                    style: TextStyle(
+                        color: Colors.grey.shade700,
+                        fontSize: Sizes.size12,
+                        fontWeight: FontWeight.w600),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const CircleAvatar(
+                          radius: 12,
+                          backgroundImage: NetworkImage(
+                              "https://avatars.githubusercontent.com/u/76625609?v=4"),
+                        ),
+                        Gaps.h4,
+                        const Expanded(
+                          child: Text(
+                            "My namfdsafsalkdfsaf;lsafjksf;lsal",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Gaps.h4,
+                        FaIcon(
+                          FontAwesomeIcons.heart,
+                          size: Sizes.size14,
+                          color: Colors.grey.shade700,
+                        ),
+                        Gaps.h2,
+                        const Text(
+                          "2.2M",
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

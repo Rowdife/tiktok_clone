@@ -28,7 +28,7 @@ class _VideoPostState extends State<VideoPost>
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
-  final int _captionLengthLimit = 65;
+  final int _captionLengthLimit = 75;
 
   final TextStyle _textButton = const TextStyle(color: Colors.white60);
 
@@ -178,7 +178,7 @@ class _VideoPostState extends State<VideoPost>
             bottom: 0,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 200,
+              height: _isFullCaptionShowed ? 200 : 0,
               decoration: _isFullCaptionShowed
                   ? BoxDecoration(
                       gradient: LinearGradient(
@@ -238,7 +238,7 @@ class _VideoPostState extends State<VideoPost>
                             ],
                           ),
                           overflow: TextOverflow.ellipsis,
-                          maxLines: _isFullCaptionShowed ? 999 : 2,
+                          maxLines: _isFullCaptionShowed ? 50 : 2,
                         )
                       : Text(
                           _captionText,
