@@ -55,7 +55,8 @@ class _ChatScreenState extends State<ChatScreen> {
       leading: const CircleAvatar(
         radius: 30,
         foregroundImage: NetworkImage(
-            "https://avatars.githubusercontent.com/u/76625609?v=4"),
+          "https://avatars.githubusercontent.com/u/76625609?v=4",
+        ),
         child: Text("S.P"),
       ),
       title: Row(
