@@ -261,7 +261,8 @@ class _VideoPostState extends State<VideoPost>
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                   foregroundImage: NetworkImage(
-                      "https://avatars.githubusercontent.com/u/76625609?v=4"),
+                    "https://avatars.githubusercontent.com/u/76625609?v=4",
+                  ),
                   child: FaIcon(
                     FontAwesomeIcons.user,
                   ),
