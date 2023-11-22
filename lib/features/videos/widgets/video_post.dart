@@ -34,6 +34,8 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
 
+  bool _isDisposed = false;
+
   bool _isFullCaptionShowed = false;
 
   final String _captionText =
@@ -41,11 +43,9 @@ class _VideoPostState extends State<VideoPost>
 
   void _initVideoPlayer() async {
     _videoPlayerController =
-        VideoPlayerController.asset("assets/videos/IMG_2127.MOV");
+        VideoPlayerController.asset("assets/videos/golf_swing.MOV");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
-
-    setState(() {});
   }
 
   @override
@@ -65,15 +65,23 @@ class _VideoPostState extends State<VideoPost>
   @override
   void dispose() {
     _videoPlayerController.dispose();
+    _animationController.dispose();
+    _isDisposed = true;
     super.dispose();
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
+    if (_isDisposed) {
+      return;
+    }
     // Now the display shows 100% fraction and video is not playing, then play the video.
     if (info.visibleFraction == 1 &&
         !_videoPlayerController.value.isPlaying &&
         !_isPaused) {
       _videoPlayerController.play();
+      setState(() {
+        _isPaused = false;
+      });
     }
 
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
@@ -82,6 +90,9 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onTogglePause() {
+    if (_isDisposed) {
+      return;
+    }
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
       setState(() {
