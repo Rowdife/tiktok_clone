@@ -57,23 +57,66 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ],
               ),
               Gaps.v24,
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        "97",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: Sizes.size18,
+              SizedBox(
+                height: Sizes.size44,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Column(
+                      children: [
+                        Text(
+                          "10M",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.size18,
+                          ),
                         ),
-                      ),
-                      Gaps.v5,
-                      Text("Following"),
-                    ],
-                  ),
-                ],
+                        Gaps.v3,
+                        Text("Followers"),
+                      ],
+                    ),
+                    VerticalDivider(
+                      width: Sizes.size32,
+                      thickness: Sizes.size1,
+                      indent: Sizes.size12,
+                      endIndent: Sizes.size12,
+                      color: Colors.grey.shade400,
+                    ),
+                    const Column(
+                      children: [
+                        Text(
+                          "97",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.size18,
+                          ),
+                        ),
+                        Gaps.v3,
+                        Text("Following"),
+                      ],
+                    ),
+                    VerticalDivider(
+                      width: Sizes.size32,
+                      thickness: Sizes.size1,
+                      indent: Sizes.size12,
+                      endIndent: Sizes.size12,
+                      color: Colors.grey.shade400,
+                    ),
+                    const Column(
+                      children: [
+                        Text(
+                          "194.3M",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.size18,
+                          ),
+                        ),
+                        Gaps.v3,
+                        Text("Likes"),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
