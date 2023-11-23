@@ -7,18 +7,27 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Settings"),
-      ),
-      body: const Column(
-        children: [
-          CupertinoActivityIndicator(
-            radius: 40,
-          ),
-          CircularProgressIndicator(),
-          CircularProgressIndicator.adaptive(),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("Settings"),
+        ),
+        body: ListView(
+          children: [
+            ListTile(
+              onTap: () => showAboutDialog(
+                  context: context,
+                  applicationVersion: "1.0",
+                  applicationLegalese:
+                      "All rights reserved. Please don't copy me."),
+              title: const Text(
+                "About",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              subtitle: const Text("About this app......"),
+            ),
+            const AboutListTile()
+          ],
+        ));
   }
 }
