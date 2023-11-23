@@ -34,8 +34,6 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
 
-  bool _isDisposed = false;
-
   bool _isFullCaptionShowed = false;
 
   final String _captionText =
@@ -66,14 +64,12 @@ class _VideoPostState extends State<VideoPost>
   void dispose() {
     _videoPlayerController.dispose();
     _animationController.dispose();
-    _isDisposed = true;
     super.dispose();
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (_isDisposed) {
-      return;
-    }
+    if (!mounted) return;
+
     // Now the display shows 100% fraction and video is not playing, then play the video.
     if (info.visibleFraction == 1 &&
         !_videoPlayerController.value.isPlaying &&
@@ -90,9 +86,8 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onTogglePause() {
-    if (_isDisposed) {
-      return;
-    }
+    if (!mounted) return;
+
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
       setState(() {
