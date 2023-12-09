@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,6 +37,8 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isFullCaptionShowed = false;
 
+  bool _isMuted = false;
+
   final String _captionText =
       "This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing. This is my golf swing.";
 
@@ -44,6 +47,11 @@ class _VideoPostState extends State<VideoPost>
         VideoPlayerController.asset("assets/videos/golf_swing.MOV");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      _isMuted = true;
+      await _videoPlayerController.setVolume(0);
+    }
+    setState(() {});
   }
 
   @override
@@ -124,6 +132,17 @@ class _VideoPostState extends State<VideoPost>
       backgroundColor: Colors.transparent,
       builder: (context) => const VideoComments(),
     );
+  }
+
+  void _onVolumeTap() {
+    setState(() {
+      _isMuted = !_isMuted;
+    });
+    if (_isMuted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(100);
+    }
   }
 
   @override
@@ -285,6 +304,19 @@ class _VideoPostState extends State<VideoPost>
                 Gaps.v20,
                 const VideoButton(icon: FontAwesomeIcons.share, label: "Share"),
               ],
+            ),
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: GestureDetector(
+              onTap: _onVolumeTap,
+              child: FaIcon(
+                _isMuted
+                    ? FontAwesomeIcons.volumeXmark
+                    : FontAwesomeIcons.volumeHigh,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
