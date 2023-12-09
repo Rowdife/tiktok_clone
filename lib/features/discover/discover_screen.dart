@@ -162,69 +162,73 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   mainAxisSpacing: Sizes.size10,
                   childAspectRatio: 9 / 20,
                 ),
-                itemBuilder: (context, index) => Column(
-                  children: [
-                    Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Sizes.size4),
-                      ),
-                      child: AspectRatio(
-                        aspectRatio: 9 / 16,
-                        child: FadeInImage.assetNetwork(
-                          fit: BoxFit.fitHeight,
-                          placeholder: "assets/images/placeholder.jpg",
-                          image:
-                              "https://cdn.pixabay.com/photo/2016/11/29/04/19/ocean-1867285_1280.jpg",
+                itemBuilder: (context, index) => LayoutBuilder(
+                  builder: (context, constraints) => Column(
+                    children: [
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Sizes.size4),
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: 9 / 16,
+                          child: FadeInImage.assetNetwork(
+                            fit: BoxFit.fitHeight,
+                            placeholder: "assets/images/placeholder.jpg",
+                            image:
+                                "https://cdn.pixabay.com/photo/2016/11/29/04/19/ocean-1867285_1280.jpg",
+                          ),
                         ),
                       ),
-                    ),
-                    Gaps.v10,
-                    const Text(
-                      "This is a very long caption for my tiktok that I'm upload just for now.",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: Sizes.size16,
-                        fontWeight: FontWeight.bold,
+                      Gaps.v10,
+                      Text(
+                        "${constraints.maxWidth} is a very long caption for my tiktok that I'm upload just for now.",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: Sizes.size16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Gaps.v8,
-                    DefaultTextStyle(
-                      style: TextStyle(
-                          color: Colors.grey.shade700,
-                          fontSize: Sizes.size12,
-                          fontWeight: FontWeight.w600),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const CircleAvatar(
-                            radius: 12,
-                            backgroundImage: NetworkImage(
-                                "https://avatars.githubusercontent.com/u/76625609?v=4"),
+                      Gaps.v8,
+                      if (constraints.maxWidth < 198 ||
+                          constraints.maxWidth > 262)
+                        DefaultTextStyle(
+                          style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontSize: Sizes.size12,
+                              fontWeight: FontWeight.w600),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const CircleAvatar(
+                                radius: 12,
+                                backgroundImage: NetworkImage(
+                                    "https://avatars.githubusercontent.com/u/76625609?v=4"),
+                              ),
+                              Gaps.h4,
+                              const Expanded(
+                                child: Text(
+                                  "My namfdsafsalkdfsaf;lsafjksf;lsal",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Gaps.h4,
+                              FaIcon(
+                                FontAwesomeIcons.heart,
+                                size: Sizes.size14,
+                                color: Colors.grey.shade700,
+                              ),
+                              Gaps.h2,
+                              const Text(
+                                "2.2M",
+                              ),
+                            ],
                           ),
-                          Gaps.h4,
-                          const Expanded(
-                            child: Text(
-                              "My namfdsafsalkdfsaf;lsafjksf;lsal",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Gaps.h4,
-                          FaIcon(
-                            FontAwesomeIcons.heart,
-                            size: Sizes.size14,
-                            color: Colors.grey.shade700,
-                          ),
-                          Gaps.h2,
-                          const Text(
-                            "2.2M",
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
