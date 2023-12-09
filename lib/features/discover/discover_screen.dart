@@ -80,50 +80,55 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 0.5,
-          title: TextField(
-            controller: _textEditingController,
-            cursorColor: Theme.of(context).primaryColor,
-            decoration: InputDecoration(
-              prefixIcon: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.magnifyingGlass,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-              hintText: "Write a comment.",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(Sizes.size4),
-                borderSide: BorderSide.none,
-              ),
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: Sizes.size16,
-              ),
-              suffixIcon: Padding(
-                padding: const EdgeInsets.only(
-                  right: Sizes.size14,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+          title: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.sm,
+            ),
+            child: TextField(
+              controller: _textEditingController,
+              cursorColor: Theme.of(context).primaryColor,
+              decoration: InputDecoration(
+                prefixIcon: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (_isWriting)
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: _onClearTap,
-                            child: FaIcon(
-                              FontAwesomeIcons.solidCircleXmark,
-                              color: Colors.grey.shade500,
-                              size: Sizes.size20,
-                            ),
-                          ),
-                        ],
-                      ),
+                    FaIcon(
+                      FontAwesomeIcons.magnifyingGlass,
+                      color: Colors.black,
+                    ),
                   ],
+                ),
+                hintText: "Write a comment.",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(Sizes.size4),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade200,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size16,
+                ),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(
+                    right: Sizes.size14,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_isWriting)
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: _onClearTap,
+                              child: FaIcon(
+                                FontAwesomeIcons.solidCircleXmark,
+                                color: Colors.grey.shade500,
+                                size: Sizes.size20,
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
