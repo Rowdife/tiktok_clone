@@ -72,7 +72,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     Gaps.v24,
                     SizedBox(
-                      height: Sizes.size44,
+                      height: Sizes.size52,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -174,7 +174,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           height: Sizes.size52,
                           width: Sizes.size52,
                           decoration: BoxDecoration(
-                            color: Colors.white,
                             border: Border.all(
                               color: Colors.grey.shade300,
                               width: 1,
@@ -198,7 +197,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             horizontal: Sizes.size14,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white,
                             border: Border.all(
                               color: Colors.grey.shade300,
                               width: 1,

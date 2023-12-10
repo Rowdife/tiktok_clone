@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class ActivityScreen extends StatefulWidget {
   const ActivityScreen({super.key});
@@ -165,7 +166,6 @@ class _ActivityScreenState extends State<ActivityScreen>
                       width: Sizes.size52,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white,
                           border: Border.all(
                             color: Colors.grey.shade200,
                             width: Sizes.size2,
@@ -173,16 +173,17 @@ class _ActivityScreenState extends State<ActivityScreen>
                       child: const Center(
                         child: FaIcon(
                           FontAwesomeIcons.bell,
-                          color: Colors.black,
                         ),
                       ),
                     ),
                     title: RichText(
                       text: TextSpan(
                           text: "Account updates:",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: isDarkMode(context)
+                                ? Colors.white
+                                : Colors.black,
                             fontSize: Sizes.size16,
                           ),
                           children: [
@@ -221,9 +222,9 @@ class _ActivityScreenState extends State<ActivityScreen>
               padding: const EdgeInsets.only(
                 left: Sizes.size12,
               ),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: Theme.of(context).appBarTheme.backgroundColor,
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(Sizes.size5),
                   bottomRight: Radius.circular(Sizes.size5),
                 ),
@@ -237,7 +238,6 @@ class _ActivityScreenState extends State<ActivityScreen>
                         children: [
                           FaIcon(
                             tab["icon"],
-                            color: Colors.black,
                             size: Sizes.size16,
                           ),
                           Gaps.h20,

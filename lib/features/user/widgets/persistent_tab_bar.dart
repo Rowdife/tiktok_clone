@@ -8,7 +8,7 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).appBarTheme.backgroundColor,
         border: Border.symmetric(
           horizontal: BorderSide(
             color: Colors.grey.shade300,
@@ -16,25 +16,30 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
           ),
         ),
       ),
-      child: const TabBar(
-        indicatorColor: Colors.black,
+      child: TabBar(
         indicatorSize: TabBarIndicatorSize.label,
-        labelPadding: EdgeInsets.symmetric(
+        labelPadding: const EdgeInsets.symmetric(
           vertical: Sizes.size10,
         ),
         labelColor: Colors.black,
         tabs: [
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size20,
             ),
-            child: Icon(Icons.grid_4x4_rounded),
+            child: Icon(
+              Icons.grid_4x4_rounded,
+              color: Theme.of(context).tabBarTheme.labelColor,
+            ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size20,
             ),
-            child: FaIcon(FontAwesomeIcons.heart),
+            child: Icon(
+              FontAwesomeIcons.heart,
+              color: Theme.of(context).tabBarTheme.labelColor,
+            ),
           ),
         ],
       ),
@@ -49,6 +54,6 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
+    return true;
   }
 }

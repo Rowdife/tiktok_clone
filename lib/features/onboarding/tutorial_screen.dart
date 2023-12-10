@@ -111,7 +111,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomAppBar(
+        bottomNavigationBar: Container(
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: Sizes.size24,
@@ -124,7 +124,10 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 disabledColor: CupertinoColors.inactiveGray,
                 color: Theme.of(context).primaryColor,
                 onPressed: _onEnterAppTap,
-                child: const Text("Enter the app!"),
+                child: const Text(
+                  "Enter the app!",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ),

@@ -62,9 +62,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           child: const UserProfileScreen(),
         ),
       ]),
-      bottomNavigationBar: BottomAppBar(
-        padding: const EdgeInsets.only(top: 10),
-        height: Sizes.size48,
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        height: Sizes.size72,
         color: isDarkMode(context) ? Colors.black : Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

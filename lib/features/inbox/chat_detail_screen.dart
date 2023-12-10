@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key});
@@ -29,9 +30,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade100,
         title: ListTile(
           contentPadding: EdgeInsets.zero,
           horizontalTitleGap: 10,
@@ -46,8 +45,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                 top: 32,
                 left: 32,
                 child: SizedBox(
-                  width: 20,
-                  height: 20,
+                  width: 18,
+                  height: 18,
                   child: Container(
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -142,7 +141,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                   bottom: Sizes.size5,
                   top: Sizes.size5,
                 ),
-                color: Colors.grey.shade100,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -165,13 +163,14 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 if (!_isWriting)
-                                  const FaIcon(
+                                  FaIcon(
                                     FontAwesomeIcons.faceLaugh,
-                                    color: Colors.black87,
+                                    color: isDarkMode(context)
+                                        ? Colors.grey
+                                        : Colors.black87,
                                   ),
                               ],
                             ),
-                            fillColor: Colors.white,
                             filled: true,
                             border: const OutlineInputBorder(
                                 borderRadius: BorderRadius.only(

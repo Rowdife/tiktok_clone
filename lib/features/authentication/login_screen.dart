@@ -67,10 +67,9 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 2,
+      bottomNavigationBar: Container(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: Sizes.size32),
+          padding: const EdgeInsets.only(bottom: Sizes.size52),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
