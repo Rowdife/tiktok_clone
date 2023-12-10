@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 final tabs = [
@@ -88,12 +89,12 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               controller: _textEditingController,
               cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
-                prefixIcon: const Column(
+                prefixIcon: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FaIcon(
                       FontAwesomeIcons.magnifyingGlass,
-                      color: Colors.black,
+                      color: isDarkMode(context) ? Colors.grey : Colors.black,
                     ),
                   ],
                 ),
@@ -103,7 +104,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: Colors.grey.shade200,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: Sizes.size16,
                 ),
@@ -141,9 +141,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             splashFactory: NoSplash.splashFactory,
             labelStyle: const TextStyle(
                 fontWeight: FontWeight.w600, fontSize: Sizes.size16),
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey.shade600,
-            indicatorColor: Colors.black,
             tabs: [
               for (var tab in tabs)
                 Tab(
@@ -186,11 +183,11 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                         ),
                       ),
                       Gaps.v10,
-                      Text(
-                        "${constraints.maxWidth} is a very long caption for my tiktok that I'm upload just for now.",
+                      const Text(
+                        "This is a very long caption for my tiktok that I'm upload just for now.",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: Sizes.size16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -200,7 +197,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                           constraints.maxWidth > 262)
                         DefaultTextStyle(
                           style: TextStyle(
-                              color: Colors.grey.shade700,
+                              color: isDarkMode(context)
+                                  ? Colors.grey.shade300
+                                  : Colors.grey.shade700,
                               fontSize: Sizes.size12,
                               fontWeight: FontWeight.w600),
                           child: Row(

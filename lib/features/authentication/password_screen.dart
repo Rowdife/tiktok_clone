@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/birthday_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
@@ -98,9 +99,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     children: [
                       GestureDetector(
                         onTap: _onClearTap,
-                        child: const FaIcon(
+                        child: FaIcon(
                           FontAwesomeIcons.solidCircleXmark,
-                          color: Colors.black38,
+                          color: isDarkMode(context)
+                              ? Colors.grey.shade300
+                              : Colors.black45,
                           size: Sizes.size16 + Sizes.size2,
                         ),
                       ),
@@ -111,7 +114,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           _obscureText
                               ? FontAwesomeIcons.eye
                               : FontAwesomeIcons.eyeSlash,
-                          color: Colors.black45,
+                          color: isDarkMode(context)
+                              ? Colors.grey.shade300
+                              : Colors.black45,
                           size: Sizes.size16 + Sizes.size2,
                         ),
                       ),

@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/features/onboarding/interest_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class BirthdayScreen extends StatefulWidget {
   const BirthdayScreen({super.key});
@@ -66,17 +67,18 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               ),
             ),
             Gaps.v12,
-            const Text(
-              "Your birthday won't be shown publicly.",
-              style: TextStyle(
-                color: Colors.black45,
+            const Opacity(
+              opacity: 0.7,
+              child: Text(
+                "Your birthday won't be shown publicly.",
+                style: TextStyle(),
               ),
             ),
             Gaps.v16,
             TextField(
               enabled: false,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: isDarkMode(context) ? Colors.white : Colors.black,
                 fontWeight: FontWeight.w300,
               ),
               controller: _birthdayController,
