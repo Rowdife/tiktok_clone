@@ -13,15 +13,16 @@ class SignUpScreen extends StatelessWidget {
 
 //functions
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
+  void _onLoginTap(BuildContext context) async {
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
       ),
     );
+    print("user came back");
   }
 
-  void _onEmailTap(BuildContext context) {
+  void _onEmailTap(BuildContext context) async {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const UsernameScreen(),
