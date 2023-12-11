@@ -1,5 +1,5 @@
 {
-  "signUpTitle": "{nameOfTheApp}へ会員登録する",
+  "signUpTitle": "{nameOfTheApp}へ会員登録する {when}",
   "signUpSubtitle": "Create a profile, follow other accounts, make your own videos, and more.",
   "logIn": "Log in",
   "likeCount": "{value}",

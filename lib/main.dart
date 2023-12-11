@@ -94,7 +94,7 @@ class TikTokApp extends StatelessWidget {
         listTileTheme: const ListTileThemeData(),
         brightness: Brightness.dark,
       ),
-      home: const MainNavigationScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
