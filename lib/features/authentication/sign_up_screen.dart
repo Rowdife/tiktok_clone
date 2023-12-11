@@ -15,11 +15,11 @@ class SignUpScreen extends StatelessWidget {
 //functions
 
   void _onLoginTap(BuildContext context) {
-    context.push(LoginScreen.routeName);
+    context.go(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
-    context.push(UsernameScreen.routeName);
+    context.go(UsernameScreen.routeName);
   }
 
 //UI

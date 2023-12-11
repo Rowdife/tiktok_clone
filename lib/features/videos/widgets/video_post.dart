@@ -303,7 +303,7 @@ class _VideoPostState extends State<VideoPost>
                   onTap: () => _onCommentTap(context),
                   child: VideoButton(
                     icon: FontAwesomeIcons.solidCommentDots,
-                    label: S.of(context).commentCount(3421432333324132132),
+                    label: S.of(context).commentCount(342143233132),
                   ),
                 ),
                 Gaps.v20,
