@@ -38,7 +38,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
     if (_username.isEmpty) return;
     context.push(
       EmailScreen.routeName,
-      extra: EmailScreenArgs(username: _username),
+      extra: _username,
     );
   }
 

@@ -16,14 +16,15 @@ final router = GoRouter(
       builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
+      name: "username_screen",
       path: UsernameScreen.routeName,
       builder: (context, state) => const UsernameScreen(),
     ),
     GoRoute(
       path: EmailScreen.routeName,
       builder: (context, state) {
-        final args = state.extra as EmailScreenArgs;
-        return EmailScreen(username: args.username);
+        final username = state.extra as String;
+        return EmailScreen(username: username);
       },
     ),
     GoRoute(
