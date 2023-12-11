@@ -21,7 +21,7 @@ class TikTokApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    S.load(const Locale("en"));
+    S.load(const Locale("ja"));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "TikTok Clone",
@@ -94,7 +94,7 @@ class TikTokApp extends StatelessWidget {
         listTileTheme: const ListTileThemeData(),
         brightness: Brightness.dark,
       ),
-      home: const SignUpScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
