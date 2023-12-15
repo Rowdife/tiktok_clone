@@ -15,10 +15,11 @@ class VideoRecordingScreen extends StatefulWidget {
 }
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _deniedPermission = false;
   bool _isSelfieMode = false;
+  bool _isDisposed = false;
 
   late final AnimationController _buttonAnimationController =
       AnimationController(
@@ -55,6 +56,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     await _cameraController.prepareForVideoRecording();
 
     _flashMode = _cameraController.value.flashMode;
+
+    setState(() {});
   }
 
   Future<void> initPermissions() async {
@@ -84,6 +87,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   void initState() {
     super.initState();
     initPermissions();
+    WidgetsBinding.instance.addObserver(this);
     _progressAnimationController.addListener(() {
       setState(() {});
     });
@@ -134,14 +138,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     );
   }
 
-  @override
-  void dispose() {
-    _progressAnimationController.dispose();
-    _buttonAnimationController.dispose();
-    _cameraController.dispose();
-    super.dispose();
-  }
-
   Future<void> _onPickVideoPressed() async {
     final video = await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (video == null) return;
@@ -156,6 +152,28 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _progressAnimationController.dispose();
+    _buttonAnimationController.dispose();
+    _cameraController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (!_cameraController.value.isInitialized || !_hasPermission) return;
+
+    if (state == AppLifecycleState.inactive) {
+      _isDisposed = true;
+      setState(() {});
+      _cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      _isDisposed = false;
+      initCamera();
+    }
   }
 
   @override
@@ -184,7 +202,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      CameraPreview(_cameraController),
+                      if (!_isDisposed) CameraPreview(_cameraController),
                       Positioned(
                         top: Sizes.size20,
                         right: Sizes.size20,
