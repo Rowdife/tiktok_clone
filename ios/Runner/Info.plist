@@ -49,5 +49,9 @@
 	<string>blahblahohyeah~~</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>blahblahohyeah~~</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>blahblahohyeah~~</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>blahblahohyeah~~</string>
 </dict>
 </plist>
