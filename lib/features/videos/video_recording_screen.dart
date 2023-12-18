@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,6 +23,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   bool _deniedPermission = false;
   bool _isSelfieMode = false;
   bool _isDisposed = false;
+
+  late final bool _noCamera = kDebugMode && Platform.isIOS;
 
   late final AnimationController _buttonAnimationController =
       AnimationController(
@@ -202,7 +207,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      if (!_isDisposed) CameraPreview(_cameraController),
+                      if (!_isDisposed &&
+                          !_noCamera &&
+                          _cameraController.value.isInitialized)
+                        CameraPreview(_cameraController),
                       Positioned(
                         top: Sizes.size20,
                         right: Sizes.size20,
