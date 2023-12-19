@@ -15,8 +15,9 @@ class LoginScreen extends StatelessWidget {
     context.pop();
   }
 
-  void _onEmailLoginTap(BuildContext context) async {
-    await Navigator.of(context).push(
+  void _onEmailLoginTap(BuildContext context) {
+    Navigator.push(
+      context,
       MaterialPageRoute(
         builder: (context) => const LoginFormScreen(),
       ),
