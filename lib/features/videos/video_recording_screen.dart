@@ -223,6 +223,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                           !_noCamera &&
                           _cameraController.value.isInitialized)
                         CameraPreview(_cameraController),
+                      const Positioned(
+                        top: Sizes.size20,
+                        left: Sizes.size20,
+                        child: CloseButton(
+                          color: Colors.white,
+                        ),
+                      ),
                       if (!_noCamera)
                         Positioned(
                           top: Sizes.size20,
