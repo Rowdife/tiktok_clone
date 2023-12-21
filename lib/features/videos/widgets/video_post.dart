@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
@@ -33,6 +36,8 @@ class _VideoPostState extends State<VideoPost>
   final int _captionLengthLimit = 75;
 
   final TextStyle _textButton = const TextStyle(color: Colors.white60);
+
+  final bool _isWeb = !Platform.isIOS || Platform.isAndroid;
 
   bool _isPaused = false;
 
@@ -148,6 +153,7 @@ class _VideoPostState extends State<VideoPost>
 
   @override
   Widget build(BuildContext context) {
+    VideoConfig.of(context).autoMute;
     return VisibilityDetector(
       key: Key("${widget.index}"),
       onVisibilityChanged: _onVisibilityChanged,
@@ -314,19 +320,33 @@ class _VideoPostState extends State<VideoPost>
               ],
             ),
           ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: GestureDetector(
-              onTap: _onVolumeTap,
-              child: FaIcon(
-                _isMuted
-                    ? FontAwesomeIcons.volumeXmark
-                    : FontAwesomeIcons.volumeHigh,
-                color: Colors.white,
+          if (_isWeb)
+            Positioned(
+              top: 10,
+              right: 10,
+              child: GestureDetector(
+                onTap: _onVolumeTap,
+                child: FaIcon(
+                  _isMuted
+                      ? FontAwesomeIcons.volumeXmark
+                      : FontAwesomeIcons.volumeHigh,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
+          if (!_isWeb)
+            Positioned(
+                left: 20,
+                top: 40,
+                child: IconButton(
+                  icon: FaIcon(
+                    VideoConfig.of(context).autoMute
+                        ? FontAwesomeIcons.volumeHigh
+                        : FontAwesomeIcons.volumeXmark,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
+                ))
         ],
       ),
     );
