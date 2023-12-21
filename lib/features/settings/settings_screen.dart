@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
 import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 
@@ -30,13 +32,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         body: ListView(
           children: [
+            ListenableBuilder(
+              listenable: darkmodeConfig,
+              builder: (context, child) => SwitchListTile.adaptive(
+                value: darkmodeConfig.value,
+                onChanged: (value) {
+                  darkmodeConfig.value = !darkmodeConfig.value;
+                },
+                title: const Text("Use darkmode"),
+              ),
+            ),
             SwitchListTile.adaptive(
-              value: VideoConfigData.of(context).autoMute,
+              value: context.watch<VideoConfig>().isMuted,
               onChanged: (value) {
-                VideoConfigData.of(context).toggleMuted();
+                context.read<VideoConfig>().toggleIsMuted();
               },
-              title: const Text("Auto mute videos."),
-              subtitle: const Text("Videos will be muted by default."),
+              title: const Text("Auto mute"),
             ),
             CheckboxListTile(
               activeColor: Colors.black,

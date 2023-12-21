@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/discover/discover_screen.dart';
@@ -24,6 +25,18 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
+  bool _isDarkMode = darkmodeConfig.value;
+
+  @override
+  void initState() {
+    super.initState();
+    darkmodeConfig.addListener(() {
+      setState(() {
+        _isDarkMode = darkmodeConfig.value;
+      });
+    });
+  }
+
   final List<String> _tabs = [
     "home",
     "discover",
@@ -43,6 +56,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   void _onPostVideoButtonTap() {
     context.pushNamed(VideoRecordingScreen.routeName);
+  }
+
+  @override
+  void dispose() {
+    darkmodeConfig.dispose();
+    super.dispose();
   }
 
   @override
@@ -73,7 +92,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         height: Sizes.size72,
-        color: isDarkMode(context) ? Colors.black : Colors.white,
+        color: _isDarkMode ? Colors.black : Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

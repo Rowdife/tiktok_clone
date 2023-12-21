@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
 import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -14,13 +16,40 @@ void main() async {
   runApp(const TikTokApp());
 }
 
-class TikTokApp extends StatelessWidget {
+class TikTokApp extends StatefulWidget {
   const TikTokApp({super.key});
+
+  @override
+  State<TikTokApp> createState() => _TikTokAppState();
+}
+
+class _TikTokAppState extends State<TikTokApp> {
+  bool _isDarkMode = darkmodeConfig.value;
+  @override
+  void initState() {
+    super.initState();
+    darkmodeConfig.addListener(() {
+      setState(() {
+        _isDarkMode = darkmodeConfig.value;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    darkmodeConfig.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     S.load(const Locale("ja"));
-    return VideoConfig(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => VideoConfig(),
+        ),
+      ],
       child: MaterialApp.router(
         routerConfig: router,
         debugShowCheckedModeBanner: false,
@@ -36,7 +65,7 @@ class TikTokApp extends StatelessWidget {
           Locale("ko"),
           Locale("ja"),
         ],
-        themeMode: ThemeMode.system,
+        themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
         theme: ThemeData(
           useMaterial3: true,
           textTheme: Typography.blackMountainView,

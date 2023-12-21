@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/utils.dart';
 
-class NavTab extends StatelessWidget {
+class NavTab extends StatefulWidget {
   const NavTab({
     super.key,
     required this.text,
@@ -23,30 +24,53 @@ class NavTab extends StatelessWidget {
   final int selectedIndex;
 
   @override
+  State<NavTab> createState() => _NavTabState();
+}
+
+class _NavTabState extends State<NavTab> {
+  bool _isDarkMode = darkmodeConfig.value;
+
+  @override
+  void initState() {
+    super.initState();
+    darkmodeConfig.addListener(() {
+      setState(() {
+        _isDarkMode = darkmodeConfig.value;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    darkmodeConfig.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: () => onTap(),
+        onTap: () => widget.onTap(),
         child: Container(
-          color: isDarkMode(context) ? Colors.black : Colors.white,
+          color: _isDarkMode ? Colors.black : Colors.white,
           child: AnimatedOpacity(
-            opacity: isSelected ? 1 : 0.6,
+            opacity: widget.isSelected ? 1 : 0.6,
             duration: const Duration(milliseconds: 300),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 FaIcon(
-                  isSelected ? selectedIcon : icon,
-                  color: isDarkMode(context) ? Colors.white : Colors.black,
+                  widget.isSelected ? widget.selectedIcon : widget.icon,
+                  color: _isDarkMode ? Colors.white : Colors.black,
                   size: Sizes.size16,
                 ),
                 Gaps.v5,
                 Text(
-                  text,
+                  widget.text,
                   style: TextStyle(
-                    color: isDarkMode(context) ? Colors.white : Colors.black,
+                    color: _isDarkMode ? Colors.white : Colors.black,
                     fontSize: Sizes.size12,
                   ),
                 ),
