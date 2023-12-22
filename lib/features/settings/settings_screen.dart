@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
 import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_model_vm.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -43,11 +44,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             SwitchListTile.adaptive(
-              value: context.watch<VideoConfig>().isMuted,
-              onChanged: (value) {
-                context.read<VideoConfig>().toggleIsMuted();
-              },
-              title: const Text("Auto mute"),
+              value: context.watch<PlaybackConfigViewModel>().muted,
+              onChanged: (value) =>
+                  context.read<PlaybackConfigViewModel>().setMuted(value),
+              title: const Text("Mute video"),
+            ),
+            SwitchListTile.adaptive(
+              value: context.watch<PlaybackConfigViewModel>().autoplay,
+              onChanged: (value) =>
+                  context.read<PlaybackConfigViewModel>().setAutoplay(value),
+              title: const Text("Autoplay video"),
             ),
             CheckboxListTile(
               activeColor: Colors.black,

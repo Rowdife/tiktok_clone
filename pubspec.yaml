@@ -49,6 +49,7 @@ dependencies:
   gal: ^2.2.0
   image_picker: ^0.8.6+1
   provider: 6.0.5
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

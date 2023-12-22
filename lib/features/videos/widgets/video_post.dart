@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_model_vm.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -73,6 +74,20 @@ class _VideoPostState extends State<VideoPost>
       value: 1.0,
       duration: _animationDuration,
     );
+
+    context
+        .read<PlaybackConfigViewModel>()
+        .addListener(_onPLaybackConfigChanged);
+  }
+
+  void _onPLaybackConfigChanged() {
+    if (!mounted) return;
+    final muted = context.read<PlaybackConfigViewModel>().muted;
+    if (muted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
+    }
   }
 
   @override
@@ -89,7 +104,10 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_videoPlayerController.value.isPlaying &&
         !_isPaused) {
-      _videoPlayerController.play();
+      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      if (autoplay) {
+        _videoPlayerController.play();
+      }
       setState(() {
         _isPaused = false;
       });
@@ -340,13 +358,14 @@ class _VideoPostState extends State<VideoPost>
                 top: 40,
                 child: IconButton(
                   icon: FaIcon(
-                    context.watch<VideoConfig>().isMuted
+                    context.watch<PlaybackConfigViewModel>().muted
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    context.read<VideoConfig>().toggleIsMuted();
+                    context.read<PlaybackConfigViewModel>().setMuted(
+                        !context.watch<PlaybackConfigViewModel>().muted);
                   },
                 ))
         ],
