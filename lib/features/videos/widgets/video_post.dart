@@ -74,16 +74,11 @@ class _VideoPostState extends State<VideoPost>
       value: 1.0,
       duration: _animationDuration,
     );
-
-    context
-        .read<PlaybackConfigViewModel>()
-        .addListener(_onPLaybackConfigChanged);
   }
 
   void _onPLaybackConfigChanged() {
     if (!mounted) return;
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-    if (muted) {
+    if (false) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -104,8 +99,7 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_videoPlayerController.value.isPlaying &&
         !_isPaused) {
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-      if (autoplay) {
+      if (false) {
         _videoPlayerController.play();
       }
       setState(() {
@@ -357,16 +351,13 @@ class _VideoPostState extends State<VideoPost>
                 left: 20,
                 top: 40,
                 child: IconButton(
-                  icon: FaIcon(
-                    context.watch<PlaybackConfigViewModel>().muted
+                  icon: const FaIcon(
+                    false
                         ? FontAwesomeIcons.volumeXmark
                         : FontAwesomeIcons.volumeHigh,
                     color: Colors.white,
                   ),
-                  onPressed: () {
-                    context.read<PlaybackConfigViewModel>().setMuted(
-                        !context.watch<PlaybackConfigViewModel>().muted);
-                  },
+                  onPressed: () {},
                 ))
         ],
       ),
