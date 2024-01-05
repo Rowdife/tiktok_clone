@@ -27,6 +27,7 @@ class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
   }
 }
 
+// notifying changed data of PlaybackConfigViewModel and then expose PlaybackConfigModel
 final playbackConfigProvider =
     NotifierProvider<PlaybackConfigViewModel, PlaybackConfigModel>(
   () => throw UnimplementedError(),

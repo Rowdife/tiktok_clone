@@ -3,11 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+
 import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
-import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
+
 import 'package:tiktok_clone/features/videos/view_models/playback_config_model_vm.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -31,7 +30,9 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             SwitchListTile.adaptive(
+              // Watching the provider which allowed to notify the VM and to expose the data of Model
               value: ref.watch(playbackConfigProvider).muted,
+              // By reading the provider, you can read the method of PlaybackConfigViewModel to change the data.
               onChanged: (value) =>
                   {ref.read(playbackConfigProvider.notifier).setMuted(value)},
               title: const Text("Mute video"),
