@@ -19,15 +19,12 @@ class SettingsScreen extends ConsumerWidget {
         ),
         body: ListView(
           children: [
-            ListenableBuilder(
-              listenable: darkmodeConfig,
-              builder: (context, child) => SwitchListTile.adaptive(
-                value: darkmodeConfig.value,
-                onChanged: (value) {
-                  darkmodeConfig.value = !darkmodeConfig.value;
-                },
-                title: const Text("Use darkmode"),
-              ),
+            SwitchListTile.adaptive(
+              value: ref.watch(playbackConfigProvider).darkmode,
+              onChanged: (value) => {
+                ref.read(playbackConfigProvider.notifier).setDarkmode(value)
+              },
+              title: const Text("Use darkmode"),
             ),
             SwitchListTile.adaptive(
               // Watching the provider which allowed to notify the VM and to expose the data of Model

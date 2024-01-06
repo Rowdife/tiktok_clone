@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
@@ -9,11 +10,12 @@ import 'package:tiktok_clone/features/inbox/inbox_screen.dart';
 import 'package:tiktok_clone/common/widgets/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/common/widgets/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/features/user/user_profile_screen.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_model_vm.dart';
 import 'package:tiktok_clone/features/videos/views/video_recording_screen.dart';
 import 'package:tiktok_clone/features/videos/views/video_timeline_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
-class MainNavigationScreen extends StatefulWidget {
+class MainNavigationScreen extends ConsumerStatefulWidget {
   static const String routeName = "mainNavigation";
 
   final String tab;
@@ -21,22 +23,10 @@ class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key, required this.tab});
 
   @override
-  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
+  MainNavigationScreenState createState() => MainNavigationScreenState();
 }
 
-class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  bool _isDarkMode = darkmodeConfig.value;
-
-  @override
-  void initState() {
-    super.initState();
-    darkmodeConfig.addListener(() {
-      setState(() {
-        _isDarkMode = darkmodeConfig.value;
-      });
-    });
-  }
-
+class MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
   final List<String> _tabs = [
     "home",
     "discover",
@@ -60,7 +50,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   void dispose() {
-    darkmodeConfig.dispose();
     super.dispose();
   }
 
@@ -92,7 +81,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         height: Sizes.size72,
-        color: _isDarkMode ? Colors.black : Colors.white,
+        color: ref.watch(playbackConfigProvider).darkmode
+            ? Colors.black
+            : Colors.white,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,7 +108,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             GestureDetector(
               onTap: _onPostVideoButtonTap,
               child: PostVideoButton(
-                inverted: isDarkMode(context) ? false : true,
+                inverted:
+                    ref.watch(playbackConfigProvider).darkmode ? false : true,
               ),
             ),
             Gaps.h24,

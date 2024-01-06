@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/features/videos/models/playback_config_model.dart';
 import 'package:tiktok_clone/features/videos/repos/playback_config_repo.dart';
@@ -10,12 +9,23 @@ class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
 
   void setMuted(bool value) {
     _repository.setMuted(value);
-    state = PlaybackConfigModel(muted: value, autoplay: state.autoplay);
+    state = PlaybackConfigModel(
+      muted: value,
+      autoplay: state.autoplay,
+      darkmode: state.darkmode,
+    );
   }
 
   void setAutoplay(bool value) {
     _repository.setAutoplay(value);
-    state = PlaybackConfigModel(muted: state.muted, autoplay: value);
+    state = PlaybackConfigModel(
+        muted: state.muted, autoplay: value, darkmode: state.darkmode);
+  }
+
+  void setDarkmode(bool value) {
+    _repository.setAutoplay(value);
+    state = PlaybackConfigModel(
+        muted: state.muted, autoplay: state.autoplay, darkmode: value);
   }
 
   @override
@@ -23,6 +33,7 @@ class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
     return PlaybackConfigModel(
       muted: _repository.isMuted(),
       autoplay: _repository.isAutoplay(),
+      darkmode: _repository.isDarkmode(),
     );
   }
 }

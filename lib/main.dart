@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,11 +8,16 @@ import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/repos/playback_config_repo.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_model_vm.dart';
+import 'package:tiktok_clone/firebase_options.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
@@ -31,36 +37,14 @@ void main() async {
   );
 }
 
-class TikTokApp extends StatefulWidget {
+class TikTokApp extends ConsumerWidget {
   const TikTokApp({super.key});
 
   @override
-  State<TikTokApp> createState() => _TikTokAppState();
-}
-
-class _TikTokAppState extends State<TikTokApp> {
-  bool _isDarkMode = darkmodeConfig.value;
-  @override
-  void initState() {
-    super.initState();
-    darkmodeConfig.addListener(() {
-      setState(() {
-        _isDarkMode = darkmodeConfig.value;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    darkmodeConfig.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     S.load(const Locale("ja"));
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
       title: "TikTok Clone",
       localizationsDelegates: const [
@@ -74,7 +58,9 @@ class _TikTokAppState extends State<TikTokApp> {
         Locale("ko"),
         Locale("ja"),
       ],
-      themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      themeMode: ref.watch(playbackConfigProvider).darkmode
+          ? ThemeMode.dark
+          : ThemeMode.light,
       theme: ThemeData(
         useMaterial3: true,
         textTheme: Typography.blackMountainView,

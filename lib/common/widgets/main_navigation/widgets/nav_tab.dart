@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_model_vm.dart';
 import 'package:tiktok_clone/utils.dart';
 
-class NavTab extends StatefulWidget {
+class NavTab extends ConsumerStatefulWidget {
   const NavTab({
     super.key,
     required this.text,
@@ -24,28 +26,10 @@ class NavTab extends StatefulWidget {
   final int selectedIndex;
 
   @override
-  State<NavTab> createState() => _NavTabState();
+  NavTabState createState() => NavTabState();
 }
 
-class _NavTabState extends State<NavTab> {
-  bool _isDarkMode = darkmodeConfig.value;
-
-  @override
-  void initState() {
-    super.initState();
-    darkmodeConfig.addListener(() {
-      setState(() {
-        _isDarkMode = darkmodeConfig.value;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    darkmodeConfig.dispose();
-    super.dispose();
-  }
-
+class NavTabState extends ConsumerState<NavTab> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -53,7 +37,9 @@ class _NavTabState extends State<NavTab> {
         behavior: HitTestBehavior.translucent,
         onTap: () => widget.onTap(),
         child: Container(
-          color: _isDarkMode ? Colors.black : Colors.white,
+          color: ref.watch(playbackConfigProvider).darkmode
+              ? Colors.black
+              : Colors.white,
           child: AnimatedOpacity(
             opacity: widget.isSelected ? 1 : 0.6,
             duration: const Duration(milliseconds: 300),
@@ -63,14 +49,18 @@ class _NavTabState extends State<NavTab> {
               children: [
                 FaIcon(
                   widget.isSelected ? widget.selectedIcon : widget.icon,
-                  color: _isDarkMode ? Colors.white : Colors.black,
+                  color: ref.watch(playbackConfigProvider).darkmode
+                      ? Colors.white
+                      : Colors.black,
                   size: Sizes.size16,
                 ),
                 Gaps.v5,
                 Text(
                   widget.text,
                   style: TextStyle(
-                    color: _isDarkMode ? Colors.white : Colors.black,
+                    color: ref.watch(playbackConfigProvider).darkmode
+                        ? Colors.white
+                        : Colors.black,
                     fontSize: Sizes.size12,
                   ),
                 ),
