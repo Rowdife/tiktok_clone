@@ -3,8 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:tiktok_clone/common/widgets/video_config/darkmode_config.dart';
+import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
 
 import 'package:tiktok_clone/features/videos/view_models/playback_config_model_vm.dart';
 
@@ -154,10 +156,13 @@ class SettingsScreen extends ConsumerWidget {
                     actions: [
                       CupertinoActionSheetAction(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: const Text("Not Log out"),
+                        child: const Text("No"),
                       ),
                       CupertinoActionSheetAction(
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () => {
+                          ref.read(authRepo).signOut(),
+                          context.go("/"),
+                        },
                         isDestructiveAction: true,
                         child: const Text("Log out"),
                       ),
