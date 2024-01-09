@@ -49,6 +49,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
     if (!_isPasswordValid()) return;
     final state = ref.read(signUpForm.notifier).state;
     ref.read(signUpForm.notifier).state = {...state, "password": _password};
+    print(ref.read(signUpForm));
     Navigator.push(
       context,
       MaterialPageRoute(

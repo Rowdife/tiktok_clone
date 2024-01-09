@@ -20,6 +20,7 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
 
   DateTime initalDate = DateTime.now();
+  String birthday = "";
 
   @override
   void initState() {
@@ -34,7 +35,14 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap() {
+    final state = ref.read(signUpForm.notifier).state;
+    ref.read(signUpForm.notifier).state = {
+      ...state,
+      "birthday": _birthdayController.value.text
+    };
+    print(ref.read(signUpForm));
     ref.read(signUpProvier.notifier).signUp(context);
+
     //context.goNamed(InterestsScreen.routeName);
   }
 
