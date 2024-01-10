@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
+import 'package:tiktok_clone/features/user/user_profile_edit_screen.dart';
 import 'package:tiktok_clone/features/user/view_models/users_view_model.dart';
 import 'package:tiktok_clone/features/user/widgets/avatar.dart';
 import 'package:tiktok_clone/features/user/widgets/persistent_tab_bar.dart';
@@ -31,6 +32,15 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     );
   }
 
+  void _onEditPressed() {
+    showModalBottomSheet(
+      scrollControlDisabledMaxHeightRatio: 0.4,
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const UserProfileEditScreen(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ref.watch(usersProvider).when(
@@ -51,8 +61,16 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   headerSliverBuilder: (context, innerBoxIsScrolled) {
                     return [
                       SliverAppBar(
+                        centerTitle: true,
                         title: Text(data.name),
                         actions: [
+                          IconButton(
+                            onPressed: _onEditPressed,
+                            icon: const FaIcon(
+                              FontAwesomeIcons.pen,
+                              size: Sizes.size20,
+                            ),
+                          ),
                           IconButton(
                             onPressed: _onGearPressed,
                             icon: const FaIcon(
@@ -240,12 +258,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                               ],
                             ),
                             Gaps.v14,
-                            const Padding(
-                              padding: EdgeInsets.symmetric(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: Sizes.size40,
                               ),
                               child: Text(
-                                "All highlights and where to watch live matches on FIFA+ I wonder how it would lookfdsafdsasadsafafsdfdsafsda",
+                                data.bio,
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
